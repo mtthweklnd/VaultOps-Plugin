@@ -1,0 +1,25 @@
+{
+  "projects": [
+    {
+      "key": "PROJ",
+      "name": "Default Project",
+      "folder": "DevOps/PROJ",
+      "nextId": 102
+    },
+    {
+      "key": "DOCS",
+      "name": "Documentation Tasks",
+      "folder": "DevOps/DOCS",
+      "nextId": 101
+    }
+  ],
+  "defaultProjectKey": "PROJ",
+  "statuses": [
+    "To Do",
+    "In Progress",
+    "In Review",
+    "Done"
+  ],
+  "defaultFolder": "DevOps",
+  "usePrefixKeys": false
+}

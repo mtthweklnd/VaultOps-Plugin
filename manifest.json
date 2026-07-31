@@ -1,0 +1,9 @@
+{
+  "id": "vault-devops",
+  "name": "Vault DevOps",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Agile DevOps project management with Kanban boards, backlogs, and work item indexing inside Obsidian.",
+  "author": "Antigravity",
+  "isDesktopOnly": false
+}

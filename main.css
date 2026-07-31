@@ -1,0 +1,181 @@
+/* fakecss:C:/Users/mtthw/Vaults/test-vault/.obsidian/plugins/vault-devops/src/components/bases/BasesKanbanCard.esbuild-svelte-fake-css */
+.devops-bases-card.svelte-5wtj1q {
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+  user-select: none;
+}
+.devops-bases-card.svelte-5wtj1q:hover {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+.devops-bases-card.svelte-5wtj1q:focus-visible {
+  outline: 2px solid var(--interactive-accent);
+}
+.devops-bases-card-header.svelte-5wtj1q {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.devops-bases-card-icon.svelte-5wtj1q {
+  font-size: 14px;
+}
+.devops-bases-card-title.svelte-5wtj1q {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--text-normal);
+  word-break: break-word;
+  flex: 1;
+}
+.devops-bases-group-badge.svelte-5wtj1q {
+  font-size: 10.5px;
+  font-weight: 500;
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: auto;
+}
+.devops-bases-card-path.svelte-5wtj1q {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.devops-bases-card-properties.svelte-5wtj1q {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px dashed var(--border-color);
+  padding-top: 6px;
+}
+.devops-bases-card-prop.svelte-5wtj1q {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+}
+.devops-bases-prop-name.svelte-5wtj1q {
+  color: var(--text-muted);
+}
+.devops-bases-prop-value.svelte-5wtj1q {
+  color: var(--text-normal);
+  font-weight: 500;
+  background: var(--background-secondary);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+/* fakecss:C:/Users/mtthw/Vaults/test-vault/.obsidian/plugins/vault-devops/src/components/bases/BasesKanbanView.esbuild-svelte-fake-css */
+.devops-bases-kanban-root.svelte-1lyit9i {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 12px;
+  box-sizing: border-box;
+  background: var(--background-primary-alt);
+}
+.devops-bases-kanban-board.svelte-1lyit9i {
+  display: flex;
+  gap: 16px;
+  height: 100%;
+  align-items: flex-start;
+}
+.devops-bases-column.svelte-1lyit9i {
+  flex: 0 0 280px;
+  width: 280px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--background-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.devops-bases-column.drag-over.svelte-1lyit9i {
+  background: var(--background-secondary-alt);
+  border-color: var(--interactive-accent);
+}
+.devops-bases-column-header.svelte-1lyit9i {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+.devops-bases-column-title-group.svelte-1lyit9i {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.devops-bases-column-dot.svelte-1lyit9i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--interactive-accent);
+}
+.devops-bases-column-title.svelte-1lyit9i {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-normal);
+}
+.devops-bases-column-count.svelte-1lyit9i {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--background-primary);
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+.devops-bases-column-content.svelte-1lyit9i {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 80px;
+  padding-right: 2px;
+}
+.devops-bases-column-empty.svelte-1lyit9i {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 24px 12px;
+  border: 1px dashed var(--border-color);
+  border-radius: 6px;
+  margin-top: 4px;
+}
+.devops-bases-empty.svelte-1lyit9i {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+  text-align: center;
+}
+.devops-bases-empty-icon.svelte-1lyit9i {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+.devops-bases-empty-title.svelte-1lyit9i {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-normal);
+}
+.devops-bases-empty-desc.svelte-1lyit9i {
+  font-size: 13px;
+  margin-top: 4px;
+}
