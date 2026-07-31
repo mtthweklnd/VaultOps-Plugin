@@ -28,7 +28,7 @@ export default class VaultDevOpsPlugin extends Plugin {
 		);
 
 		// Register Obsidian Bases custom view (Obsidian 1.8+ / 1.10+)
-		if (typeof (this as any).registerBasesView === 'function') {
+		if (this.settings.enableBasesView && typeof (this as any).registerBasesView === 'function') {
 			(this as any).registerBasesView(
 				BASE_VIEW_TYPE_DEVOPS_KANBAN,
 				getDevOpsBasesViewRegistration(this)
@@ -93,7 +93,19 @@ export default class VaultDevOpsPlugin extends Plugin {
 		if (leaves.length > 0) {
 			leaf = leaves[0];
 		} else {
-			leaf = workspace.getRightLeaf(false) || workspace.getLeaf(true);
+			const location = this.settings.primaryPaneLocation || 'right';
+			if (location === 'left') {
+				leaf = workspace.getLeftLeaf(false);
+			} else if (location === 'main') {
+				leaf = workspace.getLeaf('tab');
+			} else {
+				leaf = workspace.getRightLeaf(false);
+			}
+
+			if (!leaf) {
+				leaf = workspace.getLeaf(true);
+			}
+
 			await leaf.setViewState({
 				type: VIEW_TYPE_DEVOPS,
 				active: true

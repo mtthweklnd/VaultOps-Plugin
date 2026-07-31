@@ -19,6 +19,7 @@
 	let searchQuery: string = '';
 	let selectedTypeFilter: string = 'all';
 	let selectedStatusFilter: string = 'all';
+	let selectedTagFilter: string = 'all';
 
 	let items: WorkItem[] = [];
 	let unsubscribe: (() => void) | null = null;
@@ -43,6 +44,15 @@
 	// Filtering logic
 	$: projects = plugin.settings.projects;
 
+	$: availableTags = Array.from(
+		new Set(
+			items
+				.flatMap(i => i.tags || [])
+				.map(t => (t.startsWith('#') ? t.slice(1) : t).trim())
+				.filter(Boolean)
+		)
+	).sort();
+
 	$: filteredItems = items.filter(item => {
 		// Project filter
 		if (selectedProjectKey !== 'ALL' && item.project !== selectedProjectKey) {
@@ -59,13 +69,22 @@
 			return false;
 		}
 
+		// Tag filter
+		if (selectedTagFilter !== 'all') {
+			const hasTag = item.tags?.some(t => {
+				const cleanTag = t.startsWith('#') ? t.slice(1) : t;
+				return cleanTag.toLowerCase() === selectedTagFilter.toLowerCase();
+			});
+			if (!hasTag) return false;
+		}
+
 		// Search query filter
 		if (searchQuery.trim()) {
 			const q = searchQuery.toLowerCase().trim();
 			const matchId = item.id.toLowerCase().includes(q);
 			const matchTitle = item.title.toLowerCase().includes(q);
 			const matchAssignee = item.assignee?.toLowerCase().includes(q);
-			const matchTags = item.tags.some(t => t.toLowerCase().includes(q));
+			const matchTags = item.tags?.some(t => t.toLowerCase().includes(q));
 			return matchId || matchTitle || matchAssignee || matchTags;
 		}
 
@@ -204,6 +223,16 @@
 				<option value="all">Status: All</option>
 				{#each plugin.settings.statuses as status}
 					<option value={status}>{status}</option>
+				{/each}
+			</select>
+		</div>
+
+		<!-- Tag Filter Dropdown -->
+		<div class="devops-filter-group">
+			<select bind:value={selectedTagFilter}>
+				<option value="all">Tag: All ({availableTags.length})</option>
+				{#each availableTags as tag}
+					<option value={tag}>#{tag}</option>
 				{/each}
 			</select>
 		</div>

@@ -23,7 +23,7 @@ export class DevOpsBasesView extends BasesView {
 		this.svelteComponent = new BasesKanbanView({
 			target: this.containerEl,
 			props: {
-				app: this.app,
+				app: this.plugin.app,
 				data: this.data,
 				config: this.config,
 				plugin: this.plugin

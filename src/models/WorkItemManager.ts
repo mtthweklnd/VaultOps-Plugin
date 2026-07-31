@@ -322,7 +322,8 @@ export class WorkItemManager {
 	public async openWorkItemFile(filePath: string): Promise<void> {
 		const file = this.app.vault.getAbstractFileByPath(filePath);
 		if (file instanceof TFile) {
-			const leaf = this.app.workspace.getUnsplitLeaf();
+			const workspace = this.app.workspace as any;
+			const leaf = typeof workspace.getUnsplitLeaf === 'function' ? workspace.getUnsplitLeaf() : this.app.workspace.getLeaf(false);
 			await leaf.openFile(file);
 		}
 	}

@@ -120,6 +120,14 @@
 							</div>
 						{/if}
 
+						{#if item.tags && item.tags.length > 0}
+							<div class="devops-card-tags">
+								{#each item.tags as tag}
+									<span class="devops-card-tag">{tag.startsWith('#') ? tag : '#' + tag}</span>
+								{/each}
+							</div>
+						{/if}
+
 						<div class="devops-card-footer">
 							<div class="devops-card-footer-left">
 								<span class="devops-priority-pill {getPriorityClass(item.priority)}">

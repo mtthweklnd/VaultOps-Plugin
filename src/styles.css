@@ -423,6 +423,22 @@
 	font-weight: 700;
 }
 
+.devops-card-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin-top: 2px;
+}
+
+.devops-card-tag {
+	font-size: 0.72em;
+	color: var(--text-muted);
+	background-color: var(--background-secondary);
+	border: 1px solid var(--border-color, var(--background-modifier-border));
+	padding: 1px 6px;
+	border-radius: 4px;
+}
+
 .devops-card-footer {
 	display: flex;
 	align-items: center;

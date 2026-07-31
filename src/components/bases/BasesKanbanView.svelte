@@ -109,9 +109,11 @@
 
 		const tfile = file as TFile;
 
-		// Update file frontmatter if a custom group property is set
-		if (configuredGroupProp) {
-			const propName = configuredGroupProp.split('.')[1] || configuredGroupProp;
+		// Resolve group property key either from view config or native query groupedData
+		const activeGroupProp = configuredGroupProp || ((data as any)?.groupProperty || null);
+
+		if (activeGroupProp) {
+			const propName = activeGroupProp.split('.').pop() || activeGroupProp;
 			try {
 				await app.fileManager.processFrontMatter(tfile, (frontmatter) => {
 					if (targetColumn.title === 'Unassigned') {

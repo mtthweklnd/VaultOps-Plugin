@@ -28,12 +28,16 @@ export interface ProjectConfig {
 	nextId: number; // e.g. 101
 }
 
+export type PrimaryPaneLocation = 'right' | 'left' | 'main';
+
 export interface DevOpsSettings {
 	projects: ProjectConfig[];
 	defaultProjectKey: string;
 	statuses: WorkItemStatus[];
 	defaultFolder: string;
 	usePrefixKeys: boolean; // if true, uses devops-id, devops-type, etc.
+	enableBasesView: boolean;
+	primaryPaneLocation: PrimaryPaneLocation;
 }
 
 export const DEFAULT_SETTINGS: DevOpsSettings = {
@@ -48,5 +52,7 @@ export const DEFAULT_SETTINGS: DevOpsSettings = {
 	defaultProjectKey: "PROJ",
 	statuses: ["To Do", "In Progress", "In Review", "Done"],
 	defaultFolder: "DevOps",
-	usePrefixKeys: false
+	usePrefixKeys: false,
+	enableBasesView: false,
+	primaryPaneLocation: "right"
 };

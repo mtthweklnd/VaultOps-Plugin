@@ -10,7 +10,7 @@
       "key": "DOCS",
       "name": "Documentation Tasks",
       "folder": "DevOps/DOCS",
-      "nextId": 101
+      "nextId": 102
     }
   ],
   "defaultProjectKey": "PROJ",
@@ -21,5 +21,7 @@
     "Done"
   ],
   "defaultFolder": "DevOps",
-  "usePrefixKeys": false
+  "usePrefixKeys": false,
+  "enableBasesView": false,
+  "primaryPaneLocation": "main"
 }

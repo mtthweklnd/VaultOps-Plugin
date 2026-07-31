@@ -18,10 +18,15 @@ const copyStylesPlugin = {
 	name: 'copy-styles',
 	setup(build) {
 		build.onEnd(() => {
+			let combinedCss = '';
 			if (fs.existsSync('src/styles.css')) {
-				fs.copyFileSync('src/styles.css', 'styles.css');
-				console.log('[esbuild] Copied src/styles.css to styles.css');
+				combinedCss += fs.readFileSync('src/styles.css', 'utf8') + '\n';
 			}
+			if (fs.existsSync('main.css')) {
+				combinedCss += fs.readFileSync('main.css', 'utf8') + '\n';
+			}
+			fs.writeFileSync('styles.css', combinedCss);
+			console.log('[esbuild] Combined src/styles.css and main.css into styles.css');
 		});
 	}
 };

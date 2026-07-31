@@ -12,8 +12,16 @@
 	$: fileName = file ? file.basename : 'Untitled Note';
 	$: filePath = file ? file.path : '';
 
-	// Extract display properties based on config order or entry
-	$: propertyIds = config ? config.getOrder().slice(0, 4) : [];
+	const FALLBACK_PROPS: BasesPropertyId[] = ['note.status', 'note.priority', 'note.type', 'note.tags'];
+
+	// Extract display properties based on config order or fallback defaults
+	$: propertyIds = (() => {
+		const order = config ? config.getOrder() : [];
+		if (order && order.length > 0) {
+			return order.slice(0, 4);
+		}
+		return FALLBACK_PROPS;
+	})();
 
 	function openNote(e: MouseEvent | KeyboardEvent) {
 		if (file && app) {
