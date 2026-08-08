@@ -74,18 +74,6 @@ export class DevOpsSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				}));
 
-		// Enable Obsidian Bases View Toggle
-		new Setting(containerEl)
-			.setName('Enable Obsidian Bases View')
-			.setDesc('Enable custom DevOps Kanban view for Obsidian Bases (Obsidian 1.8+). Requires reloading plugin/Obsidian to take effect when changed.')
-			.addToggle(toggle => toggle
-				.setValue(this.plugin.settings.enableBasesView)
-				.onChange(async (value) => {
-					this.plugin.settings.enableBasesView = value;
-					await this.plugin.saveSettings();
-					new Notice('Reload Obsidian or restart the plugin for the Bases view setting to take effect.');
-				}));
-
 		containerEl.createEl('h3', { text: 'Projects Configuration' });
 
 		const existingKeys = projects.map(p => p.key);

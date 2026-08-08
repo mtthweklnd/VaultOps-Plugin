@@ -36,7 +36,6 @@ export interface DevOpsSettings {
 	statuses: WorkItemStatus[];
 	defaultFolder: string;
 	usePrefixKeys: boolean; // if true, uses devops-id, devops-type, etc.
-	enableBasesView: boolean;
 	primaryPaneLocation: PrimaryPaneLocation;
 }
 
@@ -53,6 +52,5 @@ export const DEFAULT_SETTINGS: DevOpsSettings = {
 	statuses: ["To Do", "In Progress", "In Review", "Done"],
 	defaultFolder: "DevOps",
 	usePrefixKeys: false,
-	enableBasesView: false,
 	primaryPaneLocation: "right"
 };

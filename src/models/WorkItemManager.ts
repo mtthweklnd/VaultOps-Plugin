@@ -236,6 +236,12 @@ export class WorkItemManager {
 		}
 		frontmatterLines.push('tags:');
 		frontmatterLines.push(`  - devops/${params.type}`);
+		// cssclasses drives the vault's "vault-devops" CSS snippet (per-type accent
+		// colors, bold headings, etc.) — always unprefixed, like tags, since it's a
+		// reserved Obsidian property rather than a devops-specific key.
+		frontmatterLines.push('cssclasses:');
+		frontmatterLines.push('  - devops-note');
+		frontmatterLines.push(`  - devops-note-${params.type}`);
 		frontmatterLines.push('---');
 		frontmatterLines.push('');
 		frontmatterLines.push(`# ${id}: ${params.title}`);

@@ -2,7 +2,6 @@ import { Plugin, WorkspaceLeaf } from 'obsidian';
 import { DevOpsSettings, DEFAULT_SETTINGS } from './types';
 import { WorkItemManager } from './models/WorkItemManager';
 import { DevOpsViewContainer, VIEW_TYPE_DEVOPS } from './views/DevOpsViewContainer';
-import { getDevOpsBasesViewRegistration, BASE_VIEW_TYPE_DEVOPS_KANBAN } from './views/DevOpsBasesView';
 import { DevOpsSettingTab } from './settings';
 import { CreateWorkItemModal } from './modals/CreateWorkItemModal';
 
@@ -26,14 +25,6 @@ export default class VaultDevOpsPlugin extends Plugin {
 			VIEW_TYPE_DEVOPS,
 			(leaf: WorkspaceLeaf) => new DevOpsViewContainer(leaf, this)
 		);
-
-		// Register Obsidian Bases custom view (Obsidian 1.8+ / 1.10+)
-		if (this.settings.enableBasesView && typeof (this as any).registerBasesView === 'function') {
-			(this as any).registerBasesView(
-				BASE_VIEW_TYPE_DEVOPS_KANBAN,
-				getDevOpsBasesViewRegistration(this)
-			);
-		}
 
 		// Ribbon icon for quick access
 		this.addRibbonIcon('kanban', 'Vault DevOps', () => {

@@ -4,13 +4,13 @@
       "key": "PROJ",
       "name": "Default Project",
       "folder": "DevOps/PROJ",
-      "nextId": 102
+      "nextId": 106
     },
     {
       "key": "DOCS",
       "name": "Documentation Tasks",
       "folder": "DevOps/DOCS",
-      "nextId": 102
+      "nextId": 103
     }
   ],
   "defaultProjectKey": "PROJ",
@@ -22,6 +22,6 @@
   ],
   "defaultFolder": "DevOps",
   "usePrefixKeys": false,
-  "enableBasesView": false,
-  "primaryPaneLocation": "main"
+  "primaryPaneLocation": "main",
+  "enableBasesView": false
 }
