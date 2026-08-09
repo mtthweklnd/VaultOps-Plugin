@@ -5,9 +5,47 @@
 	export let items: WorkItem[] = [];
 	export let statuses: WorkItemStatus[] = ['To Do', 'In Progress', 'In Review', 'Done'];
 	export let workItemManager: WorkItemManager;
+	export let selectedProjectKey: string = 'ALL';
 
 	let draggedItemId: string | null = null;
 	let dragOverStatus: WorkItemStatus | null = null;
+
+	// Inline quick-add state
+	let quickAddStatus: WorkItemStatus | null = null;
+	let quickAddTitle: string = '';
+	let quickAddType: WorkItemType = 'task';
+
+	function focusOnMount(node: HTMLInputElement) {
+		node.focus();
+	}
+
+	function startQuickAdd(status: WorkItemStatus) {
+		quickAddStatus = status;
+		quickAddTitle = '';
+		quickAddType = 'task';
+	}
+
+	function cancelQuickAdd() {
+		quickAddStatus = null;
+		quickAddTitle = '';
+	}
+
+	async function submitQuickAdd(status: WorkItemStatus) {
+		if (!quickAddTitle.trim()) return;
+		const projectKey = (selectedProjectKey && selectedProjectKey !== 'ALL')
+			? selectedProjectKey
+			: workItemManager.getSettings().defaultProjectKey;
+
+		await workItemManager.createWorkItem({
+			title: quickAddTitle.trim(),
+			status,
+			type: quickAddType,
+			projectKey
+		});
+
+		quickAddTitle = '';
+		// Keep quickAddStatus active for fast consecutive entry
+	}
 
 	function handleDragStart(event: DragEvent, item: WorkItem) {
 		draggedItemId = item.id;
@@ -90,7 +128,19 @@
 		>
 			<div class="devops-column-header">
 				<div class="devops-column-title-group">
-					<span class="devops-column-icon">{getStatusIcon(status)}</span>
+					<span class="devops-column-icon">
+						{#if status === 'To Do'}
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+						{:else if status === 'In Progress'}
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+						{:else if status === 'In Review'}
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+						{:else if status === 'Done'}
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+						{:else}
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+						{/if}
+					</span>
 					<span class="devops-column-title">{status}</span>
 				</div>
 				<span class="devops-column-count">{columnItems.length}</span>
@@ -142,7 +192,7 @@
 							<div class="devops-card-footer-right">
 								{#if item.assignee}
 									<span class="devops-card-assignee" title="Assignee: {item.assignee}">
-										👤 {item.assignee}
+										@{item.assignee}
 									</span>
 								{/if}
 							</div>
@@ -150,10 +200,44 @@
 					</div>
 				{/each}
 
-				{#if columnItems.length === 0}
+				{#if columnItems.length === 0 && quickAddStatus !== status}
 					<div class="devops-empty-column">No items</div>
+				{/if}
+
+				<!-- Inline Quick Add Input Bar -->
+				{#if quickAddStatus === status}
+					<div class="devops-quick-add-form">
+						<input 
+							type="text" 
+							class="devops-quick-add-input"
+							placeholder="Task title... (Enter to add)"
+							bind:value={quickAddTitle}
+							on:keydown={(e) => {
+								if (e.key === 'Enter') submitQuickAdd(status);
+								if (e.key === 'Escape') cancelQuickAdd();
+							}}
+							use:focusOnMount
+							aria-label="Quick add task title"
+						/>
+						<div class="devops-quick-add-actions">
+							<select class="devops-quick-add-type" bind:value={quickAddType} aria-label="Work item type selection">
+								<option value="task">Task</option>
+								<option value="story">Story</option>
+								<option value="bug">Bug</option>
+								<option value="feature">Feature</option>
+								<option value="epic">Epic</option>
+							</select>
+							<button class="devops-btn-xs devops-btn-save" on:click={() => submitQuickAdd(status)}>Add</button>
+							<button class="devops-btn-xs devops-btn-cancel" on:click={cancelQuickAdd} aria-label="Cancel quick add">×</button>
+						</div>
+					</div>
+				{:else}
+					<button class="devops-column-quick-add-btn" on:click={() => startQuickAdd(status)}>
+						+ Add Card
+					</button>
 				{/if}
 			</div>
 		</div>
 	{/each}
 </div>
+

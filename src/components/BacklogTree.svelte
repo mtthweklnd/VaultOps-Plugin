@@ -73,6 +73,8 @@
 					<button 
 						class="devops-node-toggle" 
 						on:click={() => toggleNode(epic.id)}
+						aria-expanded={isExpanded(epic.id)}
+						aria-label={isExpanded(epic.id) ? "Collapse Epic" : "Expand Epic"}
 					>
 						{isExpanded(epic.id) ? '▼' : '▶'}
 					</button>
@@ -92,7 +94,7 @@
 
 					{#if rollup.total > 0}
 						<div class="devops-rollup-bar" title="{rollup.done}/{rollup.total} completed">
-							<div class="devops-rollup-fill" style="width: {rollup.percent}%"></div>
+							<div class="devops-rollup-fill" style="transform: scaleX({rollup.percent / 100})"></div>
 							<span class="devops-rollup-text">{rollup.percent}%</span>
 						</div>
 					{/if}
@@ -118,6 +120,8 @@
 									<button 
 										class="devops-node-toggle" 
 										on:click={() => toggleNode(story.id)}
+										aria-expanded={isExpanded(story.id)}
+										aria-label={isExpanded(story.id) ? "Collapse Story" : "Expand Story"}
 									>
 										{isExpanded(story.id) ? '▼' : '▶'}
 									</button>
@@ -137,7 +141,7 @@
 
 									{#if storyRollup.total > 0}
 										<div class="devops-rollup-bar" title="{storyRollup.done}/{storyRollup.total} completed">
-											<div class="devops-rollup-fill" style="width: {storyRollup.percent}%"></div>
+											<div class="devops-rollup-fill" style="transform: scaleX({storyRollup.percent / 100})"></div>
 											<span class="devops-rollup-text">{storyRollup.percent}%</span>
 										</div>
 									{/if}

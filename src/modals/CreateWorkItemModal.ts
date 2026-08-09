@@ -96,14 +96,52 @@ export class CreateWorkItemModal extends Modal {
 				dropdown.onChange(val => this.priority = val as WorkItemPriority);
 			});
 
-		// Parent Item ID
-		new Setting(contentEl)
-			.setName('Parent Item ID')
-			.setDesc('Parent Epic or Story ID (e.g. PROJ-101)')
-			.addText(text => text
-				.setPlaceholder('PROJ-100')
+		// Parent Item ID Autocomplete Picker
+		const parentSetting = new Setting(contentEl)
+			.setName('Parent Item')
+			.setDesc('Select or type a parent Epic, Feature, or Story');
+
+		const allItems = this.workItemManager.getAllItems();
+		const parentCandidates = allItems.filter(item => 
+			['epic', 'feature', 'story'].includes(item.type)
+		);
+
+		const datalistId = 'devops-parent-candidates-list';
+		let datalist = contentEl.querySelector(`#${datalistId}`) as HTMLDataListElement;
+		if (!datalist) {
+			datalist = contentEl.createEl('datalist', { id: datalistId });
+		}
+		datalist.empty();
+		parentCandidates.forEach(p => {
+			datalist.createEl('option', { 
+				value: p.id, 
+				text: `${p.id}: ${p.title} (${p.type.toUpperCase()})` 
+			});
+		});
+
+		parentSetting.addText(text => {
+			const inputEl = text.inputEl;
+			inputEl.setAttribute('list', datalistId);
+			text
+				.setPlaceholder('Type or select parent (e.g. PROJ-100)...')
 				.setValue(this.parentId)
-				.onChange(val => this.parentId = val));
+				.onChange(val => this.parentId = val);
+		});
+
+		if (parentCandidates.length > 0) {
+			parentSetting.addDropdown(dropdown => {
+				dropdown.addOption('', '-- Select Parent --');
+				parentCandidates.forEach(p => {
+					dropdown.addOption(p.id, `${p.id} - ${p.title.slice(0, 32)}`);
+				});
+				dropdown.setValue(this.parentId);
+				dropdown.onChange(val => {
+					this.parentId = val;
+					const textInput = parentSetting.controlEl.querySelector('input[type="text"]') as HTMLInputElement;
+					if (textInput) textInput.value = val;
+				});
+			});
+		}
 
 		// Assignee
 		new Setting(contentEl)
